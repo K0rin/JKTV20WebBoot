@@ -144,7 +144,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("authUser", authUser);
                 String info = authUser.getReader().getFirstname()+", здравствуйте!";
                 request.setAttribute("info", info);
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                response.sendRedirect(request.getHeader("referer"));
                 break;
             case "/logout":
                 session = request.getSession(false);

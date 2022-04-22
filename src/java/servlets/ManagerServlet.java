@@ -34,7 +34,10 @@ import session.UserRolesFacade;
     "/editBook", 
     "/updateBook", 
     "/addAuthor", 
-    "/createAuthor"
+    "/createAuthor",
+    "/editAuthor",
+    "/updateAuthor",
+    
 })
 public class ManagerServlet extends HttpServlet {
     
@@ -124,22 +127,70 @@ public class ManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("/listBooks").forward(request, response);
                 break;
             case "/addAuthor":
-                
+                authors = authorFacade.findAll();
+                request.setAttribute("authors", authors);
                 request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
                 break;
             case "/createAuthor":
-                
+                String name = request.getParameter("name");
+                String lastname = request.getParameter("lastname");
+                String year = request.getParameter("year");
+                String day = request.getParameter("day");
+                String month = request.getParameter("month");
+                if("".equals(name) || "".equals(lastname)
+                        || "".equals(year) || "".equals(day)
+                          || "".equals(month)){
+                    request.setAttribute("name", name);
+                    request.setAttribute("lastname", lastname);
+                    request.setAttribute("year", year);
+                    request.setAttribute("day", day);
+                    request.setAttribute("month", month);
+                    request.setAttribute("info", "Заполните все поля");
+                    request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
+                    break;
+                }
+                Author newAuthor = new Author();
+                newAuthor.setName(name);
+                newAuthor.setLastname(lastname);
+                newAuthor.setYear(Integer.parseInt(year));
+                newAuthor.setDay(Integer.parseInt(day));
+                newAuthor.setMonth(Integer.parseInt(month));
+                authorFacade.create(newAuthor);
+                request.setAttribute("info", "Новый автор создан");
                 request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
                 break;
             case "/editAuthor":
+                String authorId = request.getParameter("authorId");
+                Author editAuthor = authorFacade.find(Long.parseLong(authorId));
+                request.setAttribute("author", editAuthor);
                 
                 request.getRequestDispatcher("/editAuthor.jsp").forward(request, response);
                 break;
             case "/updateAuthor":
-                
-                request.getRequestDispatcher("/editAuthor.jsp").forward(request, response);
+                authorId = request.getParameter("authorId");
+                Author updateAuthor = authorFacade.find(Long.parseLong(authorId));
+                name = request.getParameter("name");
+                lastname = request.getParameter("lastname");
+                year = request.getParameter("year");
+                day = request.getParameter("day");
+                month = request.getParameter("month");
+                if("".equals(name) || "".equals(lastname)
+                        || "".equals(year) || "".equals(day)
+                          || "".equals(month)){
+                    request.setAttribute("info", "Заполните все поля");
+                    request.setAttribute("author", updateAuthor);
+                    request.getRequestDispatcher("/editAuthor").forward(request, response);
+                    break;
+                }
+                updateAuthor.setName(name);
+                updateAuthor.setLastname(lastname);
+                updateAuthor.setYear(Integer.parseInt(year));
+                updateAuthor.setDay(Integer.parseInt(day));
+                updateAuthor.setMonth(Integer.parseInt(month));
+                authorFacade.edit(updateAuthor);
+                request.setAttribute("info", "Автор обновлен");
+                request.getRequestDispatcher("/addAuthor").forward(request, response);
                 break;
-            
         }
         
     }

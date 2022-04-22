@@ -12,6 +12,8 @@
         <jsp-property-group>
             <display-name>template1</display-name>
             <url-pattern>/addBook.jsp</url-pattern>
+            <url-pattern>/addAuthor.jsp</url-pattern>
+            <url-pattern>/editAuthor.jsp</url-pattern>
             <url-pattern>/showLogin.jsp</url-pattern>
             <url-pattern>/listBooks.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>
