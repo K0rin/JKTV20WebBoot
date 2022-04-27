@@ -22,6 +22,7 @@
                 <small id="password" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
               </div>
               <button type="submit" class="btn btn-primary mt-4">Войти</button>
+              <p class="text-info w-100 text-center my-3">Нет логина? <a href="showRegistration">Зарегистрироваться</a></p>
             </fieldset>
        </form>
     </div>

@@ -36,6 +36,8 @@ import tools.EncryptPassword;
     "/login", 
     "/logout",
     "/listBooks",
+    "/showRegistration",
+    "/registration",
     
 })
 public class LoginServlet extends HttpServlet {
@@ -158,6 +160,68 @@ public class LoginServlet extends HttpServlet {
                 List<Book> listBooks = bookFacade.findAll();
                 request.setAttribute("books", listBooks);
                 request.getRequestDispatcher("/listBooks.jsp").forward(request, response);
+                break;
+            case "/showRegistration":
+                request.getRequestDispatcher("/showRegistration.jsp").forward(request, response);
+                break;
+            case "/registration":
+                String firstname = request.getParameter("firstname");
+                String lastname = request.getParameter("lastname");
+                String phone = request.getParameter("phone");
+                login = request.getParameter("login");
+                String password1 = request.getParameter("password1");
+                String password2 = request.getParameter("password2");
+                if(!password1.equals(password2)){
+                    request.setAttribute("firstname", firstname);
+                    request.setAttribute("lastname", lastname);
+                    request.setAttribute("phone", phone);
+                    request.setAttribute("login", login);
+                    request.setAttribute("info", "Пароли не совпадают!");
+                    request.getRequestDispatcher("/showRegistration").forward(request, response);
+                    break;
+                }
+                if("".equals(firstname) || "".equals(lastname)
+                      ||  "".equals(phone) 
+                        || "".equals(login)
+                         ||  "".equals(password1) 
+                           || "".equals(password2)){
+                    request.setAttribute("firstname", firstname);
+                    request.setAttribute("lastname", lastname);
+                    request.setAttribute("phone", phone);
+                    request.setAttribute("login", login);
+                    request.setAttribute("info", "Заполните все поля!");
+                    request.getRequestDispatcher("/showRegistration").forward(request, response);
+                    break;
+                }
+                User newUser = userFacade.findByLogin(login);
+                if(newUser != null){
+                    request.setAttribute("firstname", firstname);
+                    request.setAttribute("lastname", lastname);
+                    request.setAttribute("phone", phone);
+                    request.setAttribute("login", login);
+                    request.setAttribute("info", "Такой пользователь уже зарегистрирован!");
+                    request.getRequestDispatcher("/showRegistration").forward(request, response);
+                    break; 
+                }
+                Reader reader = new Reader();
+                reader.setFirstname(firstname);
+                reader.setLastname(lastname);
+                reader.setPhone(phone);
+                readerFacade.create(reader);
+                newUser = new User();
+                newUser.setLogin(login);
+                encryptPassword = new EncryptPassword();
+                newUser.setSalt(encryptPassword.createSalt());
+                newUser.setPassword(encryptPassword.createHash(password1, newUser.getSalt()));
+                newUser.setReader(reader);
+                userFacade.create(newUser);
+                Role userRole = roleFacade.getRoleForName("READER");
+                UserRoles ur = new UserRoles();
+                ur.setRole(userRole);
+                ur.setUser(newUser);
+                userRolesFacade.create(ur);
+                request.setAttribute("info", "Пользователь "+newUser.getLogin()+" зарегистрирован!");
+                request.getRequestDispatcher("/showLogin").forward(request, response);
                 break;
         }
     }

@@ -16,6 +16,8 @@
             <url-pattern>/editAuthor.jsp</url-pattern>
             <url-pattern>/showLogin.jsp</url-pattern>
             <url-pattern>/listBooks.jsp</url-pattern>
+            <url-pattern>/editBook.jsp</url-pattern>
+            <url-pattern>/showRegistration.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>

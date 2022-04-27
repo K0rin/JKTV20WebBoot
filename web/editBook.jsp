@@ -11,7 +11,7 @@
             <div class="card-body">
                 <form action="updateBook" method="POST" multiple>
                     <fieldset>
-                      <legend>Добавление книги</legend>
+                      <legend>Редактирование данных книги</legend>
                       <div class="form-group mb-3">
                         <label for="caption">Название книги</label>
                         <input type="hidden" name="bookId" value="${book.id}">
@@ -20,8 +20,8 @@
                       </div>
                         <label for="authors">Авторы</label>
                         <select multiple="multiple" class="form-select" id="authors" name="listAuthors">
-                          <c:forEach var="author" items="${book.authors}">
-                              <option value="${author.id}">${author.name} ${author.lastname}. ${author.year}</option>
+                          <c:forEach var="entry" items="${authorsMap}">
+                              <option ${entry.value} value="${entry.key.id}">${entry.key.name} ${entry.key.lastname}. ${entry.key.year}</option>
                           </c:forEach>
                         </select>
                       <div class="form-group mt-3">
@@ -36,7 +36,7 @@
                       </div>
 
 
-                        <button type="submit" class="btn btn-primary mt-4">Добавить книгу</button>
+                        <button type="submit" class="btn btn-primary mt-4">Изменить данные</button>
                     </fieldset>
                </form>
             </div>
