@@ -9,6 +9,7 @@ import entity.Author;
 import entity.Book;
 import entity.User;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -89,7 +90,7 @@ public class ManagerServlet extends HttpServlet {
                 String caption = request.getParameter("caption");
                 String[] bookAuthors = request.getParameterValues("authors");
                 String publishedYear = request.getParameter("publishedYear");
-                String quantity = request.getParameter("quantity");
+                String price = request.getParameter("price");
                 Book book = new Book();
                 book.setCaption(caption);
                 List<Author> listBookAuthors= new ArrayList<>();
@@ -99,8 +100,7 @@ public class ManagerServlet extends HttpServlet {
                 }
                 book.setAuthors(listBookAuthors);
                 book.setPublishedYear(Integer.parseInt(publishedYear));
-                book.setQuantity(Integer.parseInt(quantity));
-                book.setCount(book.getQuantity());
+                book.setPrice(new BigDecimal(price));
                 bookFacade.create(book);
                 request.getRequestDispatcher("/addBook.jsp").forward(request, response);
                 break;
@@ -125,12 +125,12 @@ public class ManagerServlet extends HttpServlet {
                 String newCaption = request.getParameter("caption");
                 String[] newAuthors = request.getParameterValues("listAuthors");
                 String newPublishedYear = request.getParameter("publishedYear");
-                String newQuantity = request.getParameter("quantity");
+                price = request.getParameter("price");
                 if("".equals(newBookId) || newBookId == null
                      || "".equals(newCaption) || newCaption == null   
                      || newAuthors == null || newAuthors.length == 0  
-                     || "".equals(newPublishedYear) || newPublishedYear == null   
-                     || "".equals(newQuantity) || newQuantity == null   
+                     || "".equals(newPublishedYear) || newPublishedYear == null 
+                     || "".equals(price)
                         ){
                     request.setAttribute("info", "Заполните все поля (выберите авторов)");
                     request.getRequestDispatcher("/editBook").forward(request, response);
@@ -144,7 +144,7 @@ public class ManagerServlet extends HttpServlet {
                 }
                 editBook.setAuthors(newListAuthors);
                 editBook.setPublishedYear(Integer.parseInt(newPublishedYear));
-                editBook.setQuantity(Integer.parseInt(newQuantity));
+                editBook.setPrice(new BigDecimal(price));
                 bookFacade.edit(editBook);
                 request.getRequestDispatcher("/listBooks").forward(request, response);
                 break;
@@ -179,7 +179,7 @@ public class ManagerServlet extends HttpServlet {
                 newAuthor.setMonth(Integer.parseInt(month));
                 authorFacade.create(newAuthor);
                 request.setAttribute("info", "Новый автор создан");
-                request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
+                request.getRequestDispatcher("/addAuthor").forward(request, response);
                 break;
             case "/editAuthor":
                 String authorId = request.getParameter("authorId");

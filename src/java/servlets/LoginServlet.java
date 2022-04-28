@@ -114,6 +114,7 @@ public class LoginServlet extends HttpServlet {
             case "/index.jsp":
                 List<Book> books = bookFacade.findAll();
                 request.setAttribute("books", books);
+                
                 request.getRequestDispatcher("/listBooks.jsp").forward(request, response);
                 break;
             case "/showLogin":
@@ -144,6 +145,7 @@ public class LoginServlet extends HttpServlet {
                 }
                 HttpSession session = request.getSession(true);
                 session.setAttribute("authUser", authUser);
+                session.setAttribute("role", userRolesFacade.getTopRole(authUser));
                 String info = authUser.getReader().getFirstname()+", здравствуйте!";
                 request.setAttribute("info", info);
                 response.sendRedirect(request.getHeader("referer"));

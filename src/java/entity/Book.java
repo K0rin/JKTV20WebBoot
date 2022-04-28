@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -28,11 +29,17 @@ public class Book implements Serializable{
     @OneToOne
     private List<Author> authors;
     private int publishedYear;
-    private int quantity;
-    private int count;
-  
+    private BigDecimal price;
     
     public Book() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCaption() {
@@ -59,41 +66,22 @@ public class Book implements Serializable{
         this.publishedYear = publishedYear;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" 
-                + "caption=" + caption 
-                + ", author=" + Arrays.toString(authors.toArray())
-                + ", publishedYear=" + publishedYear 
-                + ", quantity=" + quantity 
-                + ", count=" + count 
-                + '}';
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.caption);
-        hash = 47 * hash + Objects.hashCode(this.authors);
-        hash = 47 * hash + this.publishedYear;
-        hash = 47 * hash + this.quantity;
-        hash = 47 * hash + this.count;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.caption);
+        hash = 31 * hash + Objects.hashCode(this.authors);
+        hash = 31 * hash + this.publishedYear;
+        hash = 31 * hash + Objects.hashCode(this.price);
         return hash;
     }
 
@@ -112,29 +100,40 @@ public class Book implements Serializable{
         if (this.publishedYear != other.publishedYear) {
             return false;
         }
-        if (this.quantity != other.quantity) {
-            return false;
-        }
-        if (this.count != other.count) {
-            return false;
-        }
         if (!Objects.equals(this.caption, other.caption)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.authors, other.authors)) {
             return false;
         }
+        if (!Objects.equals(this.price, other.price)) {
+            return false;
+        }
         return true;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public String toString() {
+        StringBuilder authorsStr = new StringBuilder();
+        authorsStr.append("[");
+        for(Author a : authors){
+            authorsStr.append(a.getName());
+            authorsStr.append(" ");
+            authorsStr.append(a.getLastname());
+            authorsStr.append(". ");
+        }
+        authorsStr.append("]");
+        return "Book{" 
+                + "id=" + id 
+                + ", caption=" + caption 
+                + ", authors=" + authorsStr.toString()
+                + ", publishedYear=" + publishedYear 
+                + ", price=" + price 
+                + '}';
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    
+   
 }

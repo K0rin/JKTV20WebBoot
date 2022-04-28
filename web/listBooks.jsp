@@ -16,7 +16,10 @@
                 </c:forEach>
               </h4>
                 <p class="card-text">${book.publishedYear}</p>
-                <a class="card-body" href="editBook?bookId=${book.id}">Редактировать</a>
+                <a class="card-body" href="buyBook?bookId=${book.id}">Купить</a>
+                <c:if test="${role eq 'MANAGER' or role eq 'ADMINISTRATOR'}">
+                    <a class="card-body" href="editBook?bookId=${book.id}">Редактировать</a>
+                </c:if>
               <p class="card-text"></p>
             </div>
         </div>

@@ -30,9 +30,9 @@
                         <small id="publishedYear" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
                       <div class="form-group  mt-3">
-                        <label for="quantity">Количество книг</label>
-                        <input type="text" class="form-control" id="quantity" name="quantity" aria-describedby="quantity" placeholder="" value="${book.quantity}">
-                        <small id="quantity" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
+                        <label for="price">Цена</label>
+                        <input type="text" class="form-control" id="price" name="price" aria-describedby="price" placeholder="" value="${book.price}">
+                        <small id="price" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
 
 

@@ -28,8 +28,7 @@ import session.UserRolesFacade;
  * @author Melnikov
  */
 @WebServlet(name = "AdminServlet", urlPatterns = {
-    "/editUser",
-    "/updateUser",
+    
 
 })
 public class AdminServlet extends HttpServlet {
@@ -78,23 +77,8 @@ public class AdminServlet extends HttpServlet {
                 request.getRequestDispatcher("/editUser.jsp").forward(request, response);
                 break;
             case "/updateUser":
-                String caption = request.getParameter("caption");
-                String[] bookAuthors = request.getParameterValues("authors");
-                String publishedYear = request.getParameter("publishedYear");
-                String quantity = request.getParameter("quantity");
-                Book book = new Book();
-                book.setCaption(caption);
-                List<Author> listBookAuthors= new ArrayList<>();
-                for (int i = 0; i < bookAuthors.length; i++) {
-                    String authorId = bookAuthors[i];
-                    listBookAuthors.add(authorFacade.find(Long.parseLong(authorId)));
-                }
-                book.setAuthors(listBookAuthors);
-                book.setPublishedYear(Integer.parseInt(publishedYear));
-                book.setQuantity(Integer.parseInt(quantity));
-                book.setCount(book.getQuantity());
-                bookFacade.create(book);
-                request.getRequestDispatcher("/addBook.jsp").forward(request, response);
+                
+                request.getRequestDispatcher("/editUser").forward(request, response);
                 break;
             
         }
