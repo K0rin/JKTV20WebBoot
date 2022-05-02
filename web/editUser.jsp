@@ -29,6 +29,11 @@
                         <small id="phone" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
                       <div class="form-group mb-3">
+                        <label for="money">Кошелек</label>
+                        <input type="text" class="form-control" id="money" name="money" aria-describedby="money" placeholder=""  value="${user.reader.money}">
+                        <small id="money" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
+                      </div>
+                      <div class="form-group mb-3">
                         <label for="login">Логин</label>
                         <input type="text" class="form-control" readonly id="login" name="login" aria-describedby="login" placeholder="" value="${user.login}">
                         <input type="hidden"  id="id" name="id">
