@@ -5,17 +5,9 @@
  */
 package servlets;
 
-import entity.Author;
-import entity.Book;
 import entity.Reader;
 import entity.User;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.AuthorFacade;
-import session.BookFacade;
 import session.ReaderFacade;
 import session.UserFacade;
 import session.UserRolesFacade;
@@ -35,7 +25,6 @@ import tools.EncryptPassword;
  * @author Melnikov
  */
 @WebServlet(name = "UserServlet", urlPatterns = {
-    
     "/editUser", 
     "/updateUser", 
    
@@ -102,13 +91,10 @@ public class UserServlet extends HttpServlet {
                     break;
                 }
                 if("".equals(firstname) || "".equals(lastname)
-                      ||  "".equals(phone) 
-                        
-                         ){
+                      ||  "".equals(phone)){
                     request.setAttribute("firstname", firstname);
                     request.setAttribute("lastname", lastname);
                     request.setAttribute("phone", phone);
-                    
                     request.setAttribute("info", "Заполните все поля!");
                     request.getRequestDispatcher("/showRegistration").forward(request, response);
                     break;
