@@ -8,10 +8,12 @@ package servlets;
 import entity.Author;
 import entity.Book;
 import entity.User;
+import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import session.AuthorFacade;
 import session.BookFacade;
 import session.UserRolesFacade;
@@ -87,11 +90,19 @@ public class ManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("/addBook.jsp").forward(request, response);
                 break;
             case "/createBook":
+               // String cover = request.getParameter("cover");
+                String pathToFile = "D:\\UploadDir";
+                Part part = request.getPart("cover");
+                String filename = getFileName(part);
+                File file = new File(pathToFile+File.separator+filename);
+                file.mkdirs();
+                try(InputStream fileContent = part.getInputStream()){
+                    Files.copy(fileContent, file.getPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
                 String caption = request.getParameter("caption");
                 String[] bookAuthors = request.getParameterValues("authors");
                 String publishedYear = request.getParameter("publishedYear");
                 String price = request.getParameter("price");
-                String cover = request.getParameter("cover");
                 Book book = new Book();
                 book.setCaption(caption);
                 List<Author> listBookAuthors= new ArrayList<>();
@@ -217,6 +228,18 @@ public class ManagerServlet extends HttpServlet {
                 break;
         }
         
+    }
+    private String getFileName(Part part){
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : part.getHeader("content-disposition").split(";")){
+            if(content.trim().startsWith("filename")){
+                return content
+                        .substring(content.indexOf('=')+1)
+                        .trim()
+                        .replace("\"",""); 
+            }
+        }
+        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
