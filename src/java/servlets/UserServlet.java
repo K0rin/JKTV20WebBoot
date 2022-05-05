@@ -118,7 +118,7 @@ public class UserServlet extends HttpServlet {
                 reader.setFirstname(firstname);
                 reader.setLastname(lastname);
                 reader.setPhone(phone);
-                reader.setMoney(new BigDecimal(money));
+                reader.setMoney(money);
                 readerFacade.edit(reader);
                 if(!"".equals(password1) && !"".equals(password2)){
                     EncryptPassword ep = new EncryptPassword();
@@ -141,13 +141,13 @@ public class UserServlet extends HttpServlet {
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                     break;
                 }
-                if(user.getReader().getMoney().compareTo(book.getPrice()) < 0){
+                if(user.getReader().getDecimalMoney().compareTo(book.getDecimalPrice()) < 0){
                     request.setAttribute("info", "Для покупки не хватает денег");
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                     break;
                 }
                 reader = readerFacade.find(user.getReader().getId());
-                reader.setMoney(reader.getMoney().subtract(book.getPrice()));
+                reader.setDecimalMoney(reader.getDecimalMoney().subtract(book.getDecimalPrice()));
                 readerFacade.edit(reader);
                 History history = new History();
                 history.setBook(book);

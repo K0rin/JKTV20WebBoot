@@ -33,7 +33,11 @@
                         <input type="text" class="form-control" id="price" name="price" aria-describedby="price" placeholder="">
                         <small id="price" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
-
+                      <div class="form-group  mt-3">
+                        <label for="cover">Обложка</label>
+                        <input type="file" class="form-control" id="cover" name="cover" aria-describedby="cover" placeholder="">
+                        <small id="cover" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
+                      </div>
 
                         <button type="submit" class="btn btn-primary mt-4">Добавить книгу</button>
                     </fieldset>

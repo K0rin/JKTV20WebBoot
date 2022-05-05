@@ -91,6 +91,7 @@ public class ManagerServlet extends HttpServlet {
                 String[] bookAuthors = request.getParameterValues("authors");
                 String publishedYear = request.getParameter("publishedYear");
                 String price = request.getParameter("price");
+                String cover = request.getParameter("cover");
                 Book book = new Book();
                 book.setCaption(caption);
                 List<Author> listBookAuthors= new ArrayList<>();
@@ -100,7 +101,8 @@ public class ManagerServlet extends HttpServlet {
                 }
                 book.setAuthors(listBookAuthors);
                 book.setPublishedYear(Integer.parseInt(publishedYear));
-                book.setPrice(new BigDecimal(price));
+                book.setPrice(price);
+                book.setCover(cover);
                 bookFacade.create(book);
                 request.getRequestDispatcher("/addBook.jsp").forward(request, response);
                 break;
@@ -144,7 +146,7 @@ public class ManagerServlet extends HttpServlet {
                 }
                 editBook.setAuthors(newListAuthors);
                 editBook.setPublishedYear(Integer.parseInt(newPublishedYear));
-                editBook.setPrice(new BigDecimal(price));
+                editBook.setPrice(price);
                 bookFacade.edit(editBook);
                 request.getRequestDispatcher("/listBooks").forward(request, response);
                 break;

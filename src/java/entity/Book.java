@@ -29,9 +29,18 @@ public class Book implements Serializable{
     @OneToOne
     private List<Author> authors;
     private int publishedYear;
-    private BigDecimal price;
+    private String price;
+    private String cover;
     
     public Book() {
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public Long getId() {
@@ -65,13 +74,20 @@ public class Book implements Serializable{
     public void setPublishedYear(int publishedYear) {
         this.publishedYear = publishedYear;
     }
-
-    public BigDecimal getPrice() {
+    
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
         this.price = price;
+    }
+    public BigDecimal getDecimalPrice() {
+        return new BigDecimal(price);
+    }
+
+    public void setDecimalPrice(BigDecimal price) {
+        this.price = price.toString();
     }
 
     @Override
@@ -134,6 +150,8 @@ public class Book implements Serializable{
                 + ", price=" + price 
                 + '}';
     }
+
+    
 
    
 }
