@@ -8,7 +8,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
       <c:forEach var="book" items="${books}">
         <div class="card border-light mb-3" style="max-width: 20rem;">
+            
             <div class="card-header">${book.caption}</div>
+            <img src="insertFile/${book.cover}" style="max-height: 25rem;" class="card-img-top" alt="...">
             <div class="card-body">
               <h4 class="card-title">
                 <c:forEach var="author" items="${book.authors}">
