@@ -7,14 +7,14 @@
     <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
     <link href="css/bootstrap.min(cerulean).css" rel="stylesheet"/>
     <!--<link href="css/main.css" rel="stylesheet"/>-->
-    <title>JKTV20WebLibrary</title>
+    <title>JKTV20WebBoot</title>
   </head>
   <body class="d-flex flex-column min-vh-100">
  
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.jsp">JKTV20Library</a>
+        <a class="navbar-brand" href="index.jsp">JKTV20WebBoot</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,10 +22,10 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <c:if test="${role eq 'MANAGER' or role eq 'ADMINISTRATOR'}">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="addAuthor">Добавить автора</a>
+                  <a class="nav-link" aria-current="page" href="addAuthor">Добавить производителя</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="addBook">Добавить книгу</a>
+                  <a class="nav-link" aria-current="page" href="addBook">Добавить ботинок</a>
                 </li>
             </c:if>
             <c:if test="${role ne null}">

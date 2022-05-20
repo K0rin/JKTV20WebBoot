@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import entity.Book;
+import entity.Boot;
 import entity.History;
 import entity.Reader;
 import entity.User;
@@ -133,8 +133,8 @@ public class UserServlet extends HttpServlet {
                 request.getRequestDispatcher("/editUser.jsp").forward(request, response);
                 break;
             case "/buyBook":
-                String bookId = request.getParameter("bookId");
-                Book book = bookFacade.find(Long.parseLong(bookId));
+                String bookId = request.getParameter("bootId");
+                Boot book = bookFacade.find(Long.parseLong(bookId));
                 user = userFacade.find(authUser.getId());
                 if(user.getReader().getMoney()== null){
                     request.setAttribute("info", "Для покупки не хватает денег");
@@ -150,10 +150,12 @@ public class UserServlet extends HttpServlet {
                 reader.setDecimalMoney(reader.getDecimalMoney().subtract(book.getDecimalPrice()));
                 readerFacade.edit(reader);
                 History history = new History();
+                book.setQuantity(book.getQuantity()-1);
                 history.setBook(book);
                 history.setReader(user.getReader());
                 history.setSellingDate(new GregorianCalendar().getTime());
                 historyFacade.create(history);
+                bookFacade.edit(book);
                 session.setAttribute("authUser", user);
                 request.setAttribute("info", "Покупка совершена успешно");
                 request.getRequestDispatcher("/index.jsp").forward(request, response);

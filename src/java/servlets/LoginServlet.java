@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import entity.Book;
+import entity.Boot;
 import entity.Reader;
 import entity.Role;
 import entity.User;
@@ -112,8 +112,8 @@ public class LoginServlet extends HttpServlet {
         String path = request.getServletPath();
         switch (path) {
             case "/index.jsp":
-                List<Book> books = bookFacade.findAll();
-                request.setAttribute("books", books);
+                List<Boot> boots = bookFacade.findAll();
+                request.setAttribute("boots", boots);
                 
                 request.getRequestDispatcher("/listBooks.jsp").forward(request, response);
                 break;
@@ -159,7 +159,7 @@ public class LoginServlet extends HttpServlet {
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
                 break;
             case "/listBooks":
-                List<Book> listBooks = bookFacade.findAll();
+                List<Boot> listBooks = bookFacade.findAll();
                 request.setAttribute("books", listBooks);
                 request.getRequestDispatcher("/listBooks.jsp").forward(request, response);
                 break;

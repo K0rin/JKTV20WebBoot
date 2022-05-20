@@ -5,8 +5,8 @@
  */
 package servlets;
 
-import entity.Author;
-import entity.Book;
+import entity.Manufactor;
+import entity.Boot;
 import entity.User;
 import java.io.File;
 import java.io.IOException;
@@ -88,13 +88,13 @@ public class ManagerServlet extends HttpServlet {
         switch (path) {
             
             case "/addBook":
-                List<Author> authors = authorFacade.findAll();
-                request.setAttribute("authors", authors);
+                List<Manufactor> manufactors = authorFacade.findAll();
+                request.setAttribute("manufactor", manufactors);
                 request.getRequestDispatcher("/addBook.jsp").forward(request, response);
                 break;
             case "/createBook":
                // String cover = request.getParameter("cover");
-                String pathToDir = "D:\\UploadDir\\JKTV20WebLibrary";
+                String pathToDir = "C:\\UploadDir\\JKTV20WebLibrary";
                 Part part = request.getPart("cover");
                 String filename = getFileName(part);
                 String pathToFile = pathToDir+File.separator+filename;
@@ -104,31 +104,44 @@ public class ManagerServlet extends HttpServlet {
                     Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
                 String caption = request.getParameter("caption");
-                String[] bookAuthors = request.getParameterValues("authors");
-                String publishedYear = request.getParameter("publishedYear");
+                String[] bootManufactor = request.getParameterValues("manufactors");
+                String releaseyear = request.getParameter("releaseyear");
                 String price = request.getParameter("price");
-                Book book = new Book();
-                book.setCaption(caption);
-                List<Author> listBookAuthors= new ArrayList<>();
-                for (int i = 0; i < bookAuthors.length; i++) {
-                    String authorId = bookAuthors[i];
+                String quantity = request.getParameter("quantity");
+                if(
+                     "".equals(caption) || caption == null   
+                     || bootManufactor == null || bootManufactor.length == 0  
+                     || "".equals(releaseyear) || releaseyear == null
+                     || "".equals(quantity) || quantity == null   
+                     || "".equals(price) || price == null
+                        ){
+                    request.setAttribute("info", "Заполните все поля (выберите авторов)");
+                    request.getRequestDispatcher("/addBook.jsp").forward(request, response);
+                    break;
+                }
+                Boot boot = new Boot();
+                boot.setCaption(caption);
+                List<Manufactor> listBookAuthors= new ArrayList<>();
+                for (int i = 0; i < bootManufactor.length; i++) {
+                    String authorId = bootManufactor[i];
                     listBookAuthors.add(authorFacade.find(Long.parseLong(authorId)));
                 }
-                book.setAuthors(listBookAuthors);
-                book.setPublishedYear(Integer.parseInt(publishedYear));
-                book.setPrice(price);
-                book.setCover(pathToFile);
-                bookFacade.create(book);
+                boot.setAuthors(listBookAuthors);
+                boot.setReleaseyear(Integer.parseInt(releaseyear));
+                boot.setQuantity(Integer.parseInt(quantity));
+                boot.setPrice(price);
+                boot.setCover(pathToFile);
+                bookFacade.create(boot);
                 request.getRequestDispatcher("/addBook.jsp").forward(request, response);
                 break;
             case "/editBook":
-                String bookId = request.getParameter("bookId");
-                book = bookFacade.find(Long.parseLong(bookId));
-                request.setAttribute("book", book);
-                Map<Author, String> authorsMap= new HashMap<>();
-                List<Author> listAuthors =  authorFacade.findAll();
-                for(Author author : listAuthors){
-                    if(book.getAuthors().contains(author)){
+                String bootId = request.getParameter("bootId");
+                boot = bookFacade.find(Long.parseLong(bootId));
+                request.setAttribute("boot", boot);
+                Map<Manufactor, String> authorsMap= new HashMap<>();
+                List<Manufactor> listAuthors =  authorFacade.findAll();
+                for(Manufactor author : listAuthors){
+                    if(boot.getAuthors().contains(author)){
                         authorsMap.put(author,"selected");
                     }else{
                         authorsMap.put(author,"");
@@ -138,96 +151,97 @@ public class ManagerServlet extends HttpServlet {
                 request.getRequestDispatcher("/editBook.jsp").forward(request, response);
                 break;
             case "/updateBook":
-                String newBookId = request.getParameter("bookId");
+                String newBootId = request.getParameter("bootId");
                 String newCaption = request.getParameter("caption");
                 String[] newAuthors = request.getParameterValues("listAuthors");
-                String newPublishedYear = request.getParameter("publishedYear");
+                releaseyear = request.getParameter("releaseyear");
+                quantity = request.getParameter("quantity");
                 price = request.getParameter("price");
-                if("".equals(newBookId) || newBookId == null
+                if("".equals(newBootId) || newBootId == null
                      || "".equals(newCaption) || newCaption == null   
                      || newAuthors == null || newAuthors.length == 0  
-                     || "".equals(newPublishedYear) || newPublishedYear == null 
-                     || "".equals(price)
+                     || "".equals(releaseyear) || releaseyear == null 
+                     || "".equals(price) || price == null
+                     || "".equals(quantity) || quantity == null
                         ){
                     request.setAttribute("info", "Заполните все поля (выберите авторов)");
                     request.getRequestDispatcher("/editBook").forward(request, response);
                     break;
                 }
-                Book editBook = bookFacade.find(Long.parseLong(newBookId));
+                Boot editBook = bookFacade.find(Long.parseLong(newBootId));
                 editBook.setCaption(newCaption);
-                List<Author> newListAuthors = new ArrayList<>();
+                List<Manufactor> newListAuthors = new ArrayList<>();
                 for(String authorId : newAuthors){
                     newListAuthors.add(authorFacade.find(Long.parseLong(authorId)));
                 }
                 editBook.setAuthors(newListAuthors);
-                editBook.setPublishedYear(Integer.parseInt(newPublishedYear));
+                editBook.setReleaseyear(Integer.parseInt(releaseyear));
                 editBook.setPrice(price);
+                editBook.setQuantity(Integer.parseInt(quantity));
                 bookFacade.edit(editBook);
                 request.getRequestDispatcher("/listBooks").forward(request, response);
                 break;
             case "/addAuthor":
-                authors = authorFacade.findAll();
-                request.setAttribute("authors", authors);
+                manufactors = authorFacade.findAll();
+                request.setAttribute("manufactor", manufactors);
                 request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
                 break;
             case "/createAuthor":
                 String name = request.getParameter("name");
-                String lastname = request.getParameter("lastname");
-                String year = request.getParameter("year");
-                String day = request.getParameter("day");
-                String month = request.getParameter("month");
-                if("".equals(name) || "".equals(lastname)
-                        || "".equals(year) || "".equals(day)
-                          || "".equals(month)){
+                String country = request.getParameter("country");
+                String city = request.getParameter("city");
+                String address = request.getParameter("address");
+                
+                if("".equals(name) || "".equals(country)
+                        || "".equals(city) || "".equals(address)){
                     request.setAttribute("name", name);
-                    request.setAttribute("lastname", lastname);
-                    request.setAttribute("year", year);
-                    request.setAttribute("day", day);
-                    request.setAttribute("month", month);
+                    request.setAttribute("country", country);
+                    request.setAttribute("city", city);
+                    request.setAttribute("address", address);
+                    
                     request.setAttribute("info", "Заполните все поля");
                     request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
                     break;
                 }
-                Author newAuthor = new Author();
-                newAuthor.setName(name);
-                newAuthor.setLastname(lastname);
-                newAuthor.setYear(Integer.parseInt(year));
-                newAuthor.setDay(Integer.parseInt(day));
-                newAuthor.setMonth(Integer.parseInt(month));
-                authorFacade.create(newAuthor);
-                request.setAttribute("info", "Новый автор создан");
+                Manufactor newManufactor = new Manufactor();
+                newManufactor.setName(name);
+                newManufactor.setCountry(country);
+                newManufactor.setCity(city);
+                newManufactor.setAddress(address);
+                
+                authorFacade.create(newManufactor);
+                request.setAttribute("info", "Новый производитель создан");
                 request.getRequestDispatcher("/addAuthor").forward(request, response);
                 break;
             case "/editAuthor":
-                String authorId = request.getParameter("authorId");
-                Author editAuthor = authorFacade.find(Long.parseLong(authorId));
-                request.setAttribute("author", editAuthor);
+                String authorId = request.getParameter("manufactorId");
+                Manufactor editManufactor = authorFacade.find(Long.parseLong(authorId));
+                request.setAttribute("manufactor", editManufactor);
                 
                 request.getRequestDispatcher("/editAuthor.jsp").forward(request, response);
                 break;
             case "/updateAuthor":
-                authorId = request.getParameter("authorId");
-                Author updateAuthor = authorFacade.find(Long.parseLong(authorId));
+                authorId = request.getParameter("manufactorId");
+                Manufactor updateManufactor = authorFacade.find(Long.parseLong(authorId));
                 name = request.getParameter("name");
-                lastname = request.getParameter("lastname");
-                year = request.getParameter("year");
-                day = request.getParameter("day");
-                month = request.getParameter("month");
-                if("".equals(name) || "".equals(lastname)
-                        || "".equals(year) || "".equals(day)
-                          || "".equals(month)){
+                country = request.getParameter("country");
+                city = request.getParameter("city");
+                address = request.getParameter("address");
+                
+                if("".equals(name) || "".equals(country)
+                        || "".equals(city) || "".equals(address)){
                     request.setAttribute("info", "Заполните все поля");
-                    request.setAttribute("author", updateAuthor);
+                    request.setAttribute("author", updateManufactor);
                     request.getRequestDispatcher("/editAuthor").forward(request, response);
                     break;
                 }
-                updateAuthor.setName(name);
-                updateAuthor.setLastname(lastname);
-                updateAuthor.setYear(Integer.parseInt(year));
-                updateAuthor.setDay(Integer.parseInt(day));
-                updateAuthor.setMonth(Integer.parseInt(month));
-                authorFacade.edit(updateAuthor);
-                request.setAttribute("info", "Автор обновлен");
+                updateManufactor.setName(name);
+                updateManufactor.setCountry(country);
+                updateManufactor.setCity(city);
+                updateManufactor.setAddress(address);
+                
+                authorFacade.edit(updateManufactor);
+                request.setAttribute("info", "Производитель обновлен");
                 request.getRequestDispatcher("/addAuthor").forward(request, response);
                 break;
         }

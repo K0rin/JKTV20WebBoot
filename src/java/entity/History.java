@@ -26,7 +26,7 @@ public class History implements Serializable{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    private Book book;
+    private Boot book;
     @OneToOne
     private Reader reader;
     @Temporal(TemporalType.TIMESTAMP)
@@ -80,11 +80,11 @@ public class History implements Serializable{
         this.id = id;
     }
 
-    public Book getBook() {
+    public Boot getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void setBook(Boot book) {
         this.book = book;
     }
 

@@ -5,7 +5,7 @@
  */
 package session;
 
-import entity.Author;
+import entity.Manufactor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Melnikov
  */
 @Stateless
-public class AuthorFacade extends AbstractFacade<Author> {
+public class AuthorFacade extends AbstractFacade<Manufactor> {
 
     @PersistenceContext(unitName = "JKTV20WebLibraryPU")
     private EntityManager em;
@@ -26,7 +26,7 @@ public class AuthorFacade extends AbstractFacade<Author> {
     }
 
     public AuthorFacade() {
-        super(Author.class);
+        super(Manufactor.class);
     }
     
 }
