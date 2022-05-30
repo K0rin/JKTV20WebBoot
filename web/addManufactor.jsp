@@ -9,7 +9,7 @@
 <div class="d-flex flex-column">
         <div class="card border-light my-5" style="width: 30rem;">
             <div class="card-body">
-                <form action="createAuthor" method="POST">
+                <form action="createManufactor" method="POST">
                     <fieldset>
                       <legend>Добавление производителя</legend>
                       <div class="form-group mb-3">
@@ -42,7 +42,7 @@
             <div class="card-body">
                 <h3 class="card-body">Изменить производителя</h3>
                 <c:forEach var="manufactor" items="${manufactor}">
-                    <p><a href="editAuthor?manufactorId=${manufactor.id}">${manufactor.name} ${manufactors.country}</a></p>
+                    <p><a href="editManufactor?manufactorId=${manufactor.id}">${manufactor.name} ${manufactors.country}</a></p>
                 </c:forEach>
             </div>
         </div>

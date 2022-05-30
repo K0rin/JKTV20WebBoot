@@ -36,14 +36,14 @@ import session.UserRolesFacade;
  */
 @WebServlet(name = "ManagerServlet", urlPatterns = {
     
-    "/addBook", 
-    "/createBook", 
-    "/editBook", 
-    "/updateBook", 
-    "/addAuthor", 
-    "/createAuthor",
-    "/editAuthor",
-    "/updateAuthor",
+    "/addBoot", 
+    "/createBoot", 
+    "/editBoot", 
+    "/updateBoot", 
+    "/addManufactor", 
+    "/createManufactor",
+    "/editManufactor",
+    "/updateManufactor",
     
 })
 @MultipartConfig
@@ -87,12 +87,12 @@ public class ManagerServlet extends HttpServlet {
         String path = request.getServletPath();
         switch (path) {
             
-            case "/addBook":
+            case "/addBoot":
                 List<Manufactor> manufactors = authorFacade.findAll();
                 request.setAttribute("manufactor", manufactors);
-                request.getRequestDispatcher("/addBook.jsp").forward(request, response);
+                request.getRequestDispatcher("/addBoot.jsp").forward(request, response);
                 break;
-            case "/createBook":
+            case "/createBoot":
                // String cover = request.getParameter("cover");
                 String pathToDir = "C:\\UploadDir\\JKTV20WebLibrary";
                 Part part = request.getPart("cover");
@@ -116,7 +116,7 @@ public class ManagerServlet extends HttpServlet {
                      || "".equals(price) || price == null
                         ){
                     request.setAttribute("info", "Заполните все поля (выберите авторов)");
-                    request.getRequestDispatcher("/addBook.jsp").forward(request, response);
+                    request.getRequestDispatcher("/addBoot.jsp").forward(request, response);
                     break;
                 }
                 Boot boot = new Boot();
@@ -132,9 +132,9 @@ public class ManagerServlet extends HttpServlet {
                 boot.setPrice(price);
                 boot.setCover(pathToFile);
                 bookFacade.create(boot);
-                request.getRequestDispatcher("/addBook.jsp").forward(request, response);
+                request.getRequestDispatcher("/addBoot.jsp").forward(request, response);
                 break;
-            case "/editBook":
+            case "/editBoot":
                 String bootId = request.getParameter("bootId");
                 boot = bookFacade.find(Long.parseLong(bootId));
                 request.setAttribute("boot", boot);
@@ -148,9 +148,9 @@ public class ManagerServlet extends HttpServlet {
                     }
                 }
                 request.setAttribute("authorsMap",authorsMap);
-                request.getRequestDispatcher("/editBook.jsp").forward(request, response);
+                request.getRequestDispatcher("/editBoot.jsp").forward(request, response);
                 break;
-            case "/updateBook":
+            case "/updateBoot":
                 String newBootId = request.getParameter("bootId");
                 String newCaption = request.getParameter("caption");
                 String[] newAuthors = request.getParameterValues("listAuthors");
@@ -165,7 +165,7 @@ public class ManagerServlet extends HttpServlet {
                      || "".equals(quantity) || quantity == null
                         ){
                     request.setAttribute("info", "Заполните все поля (выберите авторов)");
-                    request.getRequestDispatcher("/editBook").forward(request, response);
+                    request.getRequestDispatcher("/editBoot.jsp").forward(request, response);
                     break;
                 }
                 Boot editBook = bookFacade.find(Long.parseLong(newBootId));
@@ -181,12 +181,12 @@ public class ManagerServlet extends HttpServlet {
                 bookFacade.edit(editBook);
                 request.getRequestDispatcher("/listBooks").forward(request, response);
                 break;
-            case "/addAuthor":
+            case "/addManufactor":
                 manufactors = authorFacade.findAll();
                 request.setAttribute("manufactor", manufactors);
-                request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
+                request.getRequestDispatcher("/addManufactor.jsp").forward(request, response);
                 break;
-            case "/createAuthor":
+            case "/createManufactor":
                 String name = request.getParameter("name");
                 String country = request.getParameter("country");
                 String city = request.getParameter("city");
@@ -200,7 +200,7 @@ public class ManagerServlet extends HttpServlet {
                     request.setAttribute("address", address);
                     
                     request.setAttribute("info", "Заполните все поля");
-                    request.getRequestDispatcher("/addAuthor.jsp").forward(request, response);
+                    request.getRequestDispatcher("/addManufactor.jsp").forward(request, response);
                     break;
                 }
                 Manufactor newManufactor = new Manufactor();
@@ -211,16 +211,16 @@ public class ManagerServlet extends HttpServlet {
                 
                 authorFacade.create(newManufactor);
                 request.setAttribute("info", "Новый производитель создан");
-                request.getRequestDispatcher("/addAuthor").forward(request, response);
+                request.getRequestDispatcher("/addManufactor").forward(request, response);
                 break;
-            case "/editAuthor":
+            case "/editManufactor":
                 String authorId = request.getParameter("manufactorId");
                 Manufactor editManufactor = authorFacade.find(Long.parseLong(authorId));
                 request.setAttribute("manufactor", editManufactor);
                 
-                request.getRequestDispatcher("/editAuthor.jsp").forward(request, response);
+                request.getRequestDispatcher("/editManufactor.jsp").forward(request, response);
                 break;
-            case "/updateAuthor":
+            case "/updateManufactor":
                 authorId = request.getParameter("manufactorId");
                 Manufactor updateManufactor = authorFacade.find(Long.parseLong(authorId));
                 name = request.getParameter("name");
@@ -232,7 +232,7 @@ public class ManagerServlet extends HttpServlet {
                         || "".equals(city) || "".equals(address)){
                     request.setAttribute("info", "Заполните все поля");
                     request.setAttribute("author", updateManufactor);
-                    request.getRequestDispatcher("/editAuthor").forward(request, response);
+                    request.getRequestDispatcher("/editManufactor").forward(request, response);
                     break;
                 }
                 updateManufactor.setName(name);
@@ -242,7 +242,7 @@ public class ManagerServlet extends HttpServlet {
                 
                 authorFacade.edit(updateManufactor);
                 request.setAttribute("info", "Производитель обновлен");
-                request.getRequestDispatcher("/addAuthor").forward(request, response);
+                request.getRequestDispatcher("/addManufactor").forward(request, response);
                 break;
         }
         

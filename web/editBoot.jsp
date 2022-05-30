@@ -9,7 +9,7 @@
 
         <div class="card border-light my-5" style="width: 30rem;">
             <div class="card-body">
-                <form action="updateBook" method="POST" multiple>
+                <form action="updateBoot" method="POST" multiple>
                     <fieldset>
                       <legend>Редактирование данных ботинка</legend>
                       <div class="form-group mb-3">

@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
         <div class="card border-light my-5" style="width: 30rem;">
             <div class="card-body">
-                <form action="updateAuthor" method="POST">
+                <form action="updateManufactor" method="POST">
                     <fieldset>
                       <legend>Редактирование автора</legend>
                       <div class="form-group mb-3">

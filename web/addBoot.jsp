@@ -9,7 +9,7 @@
 
         <div class="card border-light my-5" style="width: 30rem;">
             <div class="card-body">
-                <form action="createBook" method="POST" enctype="multipart/form-data">
+                <form action="createBoot" method="POST" enctype="multipart/form-data">
                     <fieldset>
                       <legend>Добавление книги</legend>
                       <div class="form-group mb-3">

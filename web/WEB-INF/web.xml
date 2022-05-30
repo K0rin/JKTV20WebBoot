@@ -11,12 +11,12 @@
     <jsp-config>
         <jsp-property-group>
             <display-name>template1</display-name>
-            <url-pattern>/addBook.jsp</url-pattern>
-            <url-pattern>/addAuthor.jsp</url-pattern>
-            <url-pattern>/editAuthor.jsp</url-pattern>
+            <url-pattern>/addBoot.jsp</url-pattern>
+            <url-pattern>/addManufactor.jsp</url-pattern>
+            <url-pattern>/editManufactor.jsp</url-pattern>
             <url-pattern>/showLogin.jsp</url-pattern>
             <url-pattern>/listBooks.jsp</url-pattern>
-            <url-pattern>/editBook.jsp</url-pattern>
+            <url-pattern>/editBoot.jsp</url-pattern>
             <url-pattern>/editUser.jsp</url-pattern>
             <url-pattern>/showRegistration.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>

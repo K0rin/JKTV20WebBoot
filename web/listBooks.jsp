@@ -20,14 +20,14 @@
                 <p class="card-text">Год выпуска: ${boot.releaseyear}</p>
                 <p class="card-text">Цена: ${boot.price}</p>
                 <c:if test="${boot.quantity > 0}">
-                    <a class="card-body" href="buyBook?bootId=${boot.id}">Купить</a>
+                    <a class="card-body" href="buyBoot?bootId=${boot.id}">Купить</a>
                 </c:if>
                 <c:if test="${boot.quantity == 0}">
                     <p class="card-text" style="color: red;">Нет в наличии</p>
                 </c:if>    
                 
                 <c:if test="${role eq 'MANAGER' or role eq 'ADMINISTRATOR'}">
-                    <a class="card-body" href="editBook?bootId=${boot.id}">Редактировать</a>
+                    <a class="card-body" href="editBoot?bootId=${boot.id}">Редактировать</a>
                 </c:if>
               <p class="card-text"></p>
             </div>

@@ -34,7 +34,7 @@ import tools.EncryptPassword;
 @WebServlet(name = "UserServlet", urlPatterns = {
     "/editUser", 
     "/updateUser", 
-    "/buyBook",
+    "/buyBoot",
     
    
     
@@ -132,7 +132,7 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("info", "Изменение данных успешно");
                 request.getRequestDispatcher("/editUser.jsp").forward(request, response);
                 break;
-            case "/buyBook":
+            case "/buyBoot":
                 String bookId = request.getParameter("bootId");
                 Boot book = bookFacade.find(Long.parseLong(bookId));
                 user = userFacade.find(authUser.getId());
