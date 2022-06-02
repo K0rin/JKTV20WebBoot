@@ -10,9 +10,9 @@
             <div class="card-body">
                 <form action="updateManufactor" method="POST">
                     <fieldset>
-                      <legend>Редактирование автора</legend>
+                      <legend>Редактирование производителя</legend>
                       <div class="form-group mb-3">
-                        <label for="name">Имя</label>
+                        <label for="name">Название</label>
                         <input type="hidden" name="manufactorId" value="${manufactor.id}">
                         <input type="text" class="form-control" id="name" name="name" aria-describedby="name" placeholder="" value="${manufactor.name}">
                         <small id="caption" class="form-text text-muted d-none">Это поле не должно быть пустым</small>

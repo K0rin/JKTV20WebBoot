@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Melnikov
  */
 @Stateless
-public class BookFacade extends AbstractFacade<Boot> {
+public class BootFacade extends AbstractFacade<Boot> {
 
     @PersistenceContext(unitName = "JKTV20WebLibraryPU")
     private EntityManager em;
@@ -25,7 +25,7 @@ public class BookFacade extends AbstractFacade<Boot> {
         return em;
     }
 
-    public BookFacade() {
+    public BootFacade() {
         super(Boot.class);
     }
     

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.BookFacade;
+import session.BootFacade;
 import session.HistoryFacade;
 import session.ReaderFacade;
 import session.UserFacade;
@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
     @EJB private UserFacade userFacade;
     @EJB private ReaderFacade readerFacade;
     @EJB private UserRolesFacade userRolesFacade;
-    @EJB private BookFacade bookFacade;
+    @EJB private BootFacade bookFacade;
     @EJB private HistoryFacade historyFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

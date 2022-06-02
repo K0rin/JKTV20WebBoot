@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import session.BookFacade;
+import session.BootFacade;
 import session.ReaderFacade;
 import session.RoleFacade;
 import session.UserFacade;
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
     @EJB private ReaderFacade readerFacade;
     @EJB private RoleFacade roleFacade;
     @EJB private UserRolesFacade userRolesFacade;
-    @EJB private BookFacade bookFacade;
+    @EJB private BootFacade bookFacade;
     private EncryptPassword encryptPassword;
     
     

@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import session.AuthorFacade;
-import session.BookFacade;
+import session.ManufactorFacade;
+import session.BootFacade;
 import session.UserFacade;
 import session.UserRolesFacade;
 
@@ -32,8 +32,8 @@ public class AdminServlet extends HttpServlet {
     
 @EJB private UserFacade userFacade;
 @EJB private UserRolesFacade userRolesFacade;
-@EJB private BookFacade bookFacade;
-@EJB private AuthorFacade authorFacade;
+@EJB private BootFacade bookFacade;
+@EJB private ManufactorFacade authorFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

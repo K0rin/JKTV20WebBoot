@@ -13,7 +13,7 @@
                     <fieldset>
                       <legend>Добавление производителя</legend>
                       <div class="form-group mb-3">
-                        <label for="name">Имя</label>
+                        <label for="name">Название</label>
                         <input type="text" class="form-control" id="name" name="name" aria-describedby="name" placeholder="" value="${name}">
                         <small id="name" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>

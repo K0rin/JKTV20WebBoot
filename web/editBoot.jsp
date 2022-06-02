@@ -13,12 +13,12 @@
                     <fieldset>
                       <legend>Редактирование данных ботинка</legend>
                       <div class="form-group mb-3">
-                        <label for="caption">Название книги</label>
+                        <label for="caption">Название ботинка</label>
                         <input type="hidden" name="bootId" value="${boot.id}">
                         <input type="text" class="form-control" id="caption" name="caption" aria-describedby="caption" placeholder="" value="${boot.caption}">
                         <small id="caption" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
-                        <label for="authors">Авторы</label>
+                        <label for="authors">Производители</label>
                         <select multiple="multiple" class="form-select" id="authors" name="listAuthors">
                           <c:forEach var="entry" items="${authorsMap}">
                               <option ${entry.value} value="${entry.key.id}">${entry.key.name} ${entry.key.country}.</option>

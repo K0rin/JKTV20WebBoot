@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Melnikov
  */
 @Stateless
-public class AuthorFacade extends AbstractFacade<Manufactor> {
+public class ManufactorFacade extends AbstractFacade<Manufactor> {
 
     @PersistenceContext(unitName = "JKTV20WebLibraryPU")
     private EntityManager em;
@@ -25,7 +25,7 @@ public class AuthorFacade extends AbstractFacade<Manufactor> {
         return em;
     }
 
-    public AuthorFacade() {
+    public ManufactorFacade() {
         super(Manufactor.class);
     }
     

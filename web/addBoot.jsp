@@ -11,13 +11,13 @@
             <div class="card-body">
                 <form action="createBoot" method="POST" enctype="multipart/form-data">
                     <fieldset>
-                      <legend>Добавление книги</legend>
+                      <legend>Добавление Ботинка</legend>
                       <div class="form-group mb-3">
                         <label for="caption">Название обуви</label>
                         <input type="text" class="form-control" id="caption" name="caption" aria-describedby="caption" placeholder="">
                         <small id="caption" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
-                        <label for="manufactor">Авторы</label>
+                        <label for="manufactor">Производители</label>
                         <select multiple="" class="form-select" id="manufactors" name="manufactors">
                           <c:forEach var="manufactor" items="${manufactor}">
                               <option value="${manufactor.id}">${manufactor.name}  ${manufactor.country}</option>
@@ -39,12 +39,12 @@
                         <small id="quantity" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>  
                       <div class="form-group  mt-3">
-                        <label for="cover">Обложка</label>
+                        <label for="cover">Фотография</label>
                         <input type="file" class="form-control" id="cover" name="cover" aria-describedby="cover" placeholder="">
                         <small id="cover" class="form-text text-muted d-none">Это поле не должно быть пустым</small>
                       </div>
 
-                        <button type="submit" class="btn btn-primary mt-4">Добавить книгу</button>
+                        <button type="submit" class="btn btn-primary mt-4">Добавить боинок</button>
                     </fieldset>
                </form>
             </div>

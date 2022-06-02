@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import session.AuthorFacade;
-import session.BookFacade;
+import session.ManufactorFacade;
+import session.BootFacade;
 import session.UserRolesFacade;
 
 /**
@@ -49,8 +49,8 @@ import session.UserRolesFacade;
 @MultipartConfig
 public class ManagerServlet extends HttpServlet {
     
-    @EJB private BookFacade bookFacade;
-    @EJB private AuthorFacade authorFacade;
+    @EJB private BootFacade bootFacade;
+    @EJB private ManufactorFacade manufactorFacade;
     @EJB private UserRolesFacade userRolesFacade;
     
     /**
@@ -88,7 +88,7 @@ public class ManagerServlet extends HttpServlet {
         switch (path) {
             
             case "/addBoot":
-                List<Manufactor> manufactors = authorFacade.findAll();
+                List<Manufactor> manufactors = manufactorFacade.findAll();
                 request.setAttribute("manufactor", manufactors);
                 request.getRequestDispatcher("/addBoot.jsp").forward(request, response);
                 break;
@@ -115,7 +115,7 @@ public class ManagerServlet extends HttpServlet {
                      || "".equals(quantity) || quantity == null   
                      || "".equals(price) || price == null
                         ){
-                    request.setAttribute("info", "Заполните все поля (выберите авторов)");
+                    request.setAttribute("info", "Заполните все поля (выберите производителей)");
                     request.getRequestDispatcher("/addBoot.jsp").forward(request, response);
                     break;
                 }
@@ -124,22 +124,23 @@ public class ManagerServlet extends HttpServlet {
                 List<Manufactor> listBookAuthors= new ArrayList<>();
                 for (int i = 0; i < bootManufactor.length; i++) {
                     String authorId = bootManufactor[i];
-                    listBookAuthors.add(authorFacade.find(Long.parseLong(authorId)));
+                    listBookAuthors.add(manufactorFacade.find(Long.parseLong(authorId)));
                 }
                 boot.setAuthors(listBookAuthors);
                 boot.setReleaseyear(Integer.parseInt(releaseyear));
                 boot.setQuantity(Integer.parseInt(quantity));
                 boot.setPrice(price);
                 boot.setCover(pathToFile);
-                bookFacade.create(boot);
-                request.getRequestDispatcher("/addBoot.jsp").forward(request, response);
+                bootFacade.create(boot);
+                request.setAttribute("info", "Ботинок успешно добавлен");
+                request.getRequestDispatcher("/addBoot").forward(request, response);
                 break;
             case "/editBoot":
                 String bootId = request.getParameter("bootId");
-                boot = bookFacade.find(Long.parseLong(bootId));
+                boot = bootFacade.find(Long.parseLong(bootId));
                 request.setAttribute("boot", boot);
                 Map<Manufactor, String> authorsMap= new HashMap<>();
-                List<Manufactor> listAuthors =  authorFacade.findAll();
+                List<Manufactor> listAuthors =  manufactorFacade.findAll();
                 for(Manufactor author : listAuthors){
                     if(boot.getAuthors().contains(author)){
                         authorsMap.put(author,"selected");
@@ -164,25 +165,26 @@ public class ManagerServlet extends HttpServlet {
                      || "".equals(price) || price == null
                      || "".equals(quantity) || quantity == null
                         ){
-                    request.setAttribute("info", "Заполните все поля (выберите авторов)");
+                    request.setAttribute("info", "Заполните все поля (выберите производителей)");
                     request.getRequestDispatcher("/editBoot.jsp").forward(request, response);
                     break;
                 }
-                Boot editBook = bookFacade.find(Long.parseLong(newBootId));
+                Boot editBook = bootFacade.find(Long.parseLong(newBootId));
                 editBook.setCaption(newCaption);
                 List<Manufactor> newListAuthors = new ArrayList<>();
                 for(String authorId : newAuthors){
-                    newListAuthors.add(authorFacade.find(Long.parseLong(authorId)));
+                    newListAuthors.add(manufactorFacade.find(Long.parseLong(authorId)));
                 }
                 editBook.setAuthors(newListAuthors);
                 editBook.setReleaseyear(Integer.parseInt(releaseyear));
                 editBook.setPrice(price);
                 editBook.setQuantity(Integer.parseInt(quantity));
-                bookFacade.edit(editBook);
-                request.getRequestDispatcher("/listBooks").forward(request, response);
+                bootFacade.edit(editBook);
+                request.setAttribute("info", "Данные успешно изменены");
+                request.getRequestDispatcher("/editBoot").forward(request, response);
                 break;
             case "/addManufactor":
-                manufactors = authorFacade.findAll();
+                manufactors = manufactorFacade.findAll();
                 request.setAttribute("manufactor", manufactors);
                 request.getRequestDispatcher("/addManufactor.jsp").forward(request, response);
                 break;
@@ -200,7 +202,7 @@ public class ManagerServlet extends HttpServlet {
                     request.setAttribute("address", address);
                     
                     request.setAttribute("info", "Заполните все поля");
-                    request.getRequestDispatcher("/addManufactor.jsp").forward(request, response);
+                    request.getRequestDispatcher("/addManufactor").forward(request, response);
                     break;
                 }
                 Manufactor newManufactor = new Manufactor();
@@ -209,20 +211,20 @@ public class ManagerServlet extends HttpServlet {
                 newManufactor.setCity(city);
                 newManufactor.setAddress(address);
                 
-                authorFacade.create(newManufactor);
+                manufactorFacade.create(newManufactor);
                 request.setAttribute("info", "Новый производитель создан");
                 request.getRequestDispatcher("/addManufactor").forward(request, response);
                 break;
             case "/editManufactor":
                 String authorId = request.getParameter("manufactorId");
-                Manufactor editManufactor = authorFacade.find(Long.parseLong(authorId));
+                Manufactor editManufactor = manufactorFacade.find(Long.parseLong(authorId));
                 request.setAttribute("manufactor", editManufactor);
                 
                 request.getRequestDispatcher("/editManufactor.jsp").forward(request, response);
                 break;
             case "/updateManufactor":
                 authorId = request.getParameter("manufactorId");
-                Manufactor updateManufactor = authorFacade.find(Long.parseLong(authorId));
+                Manufactor updateManufactor = manufactorFacade.find(Long.parseLong(authorId));
                 name = request.getParameter("name");
                 country = request.getParameter("country");
                 city = request.getParameter("city");
@@ -240,9 +242,9 @@ public class ManagerServlet extends HttpServlet {
                 updateManufactor.setCity(city);
                 updateManufactor.setAddress(address);
                 
-                authorFacade.edit(updateManufactor);
+                manufactorFacade.edit(updateManufactor);
                 request.setAttribute("info", "Производитель обновлен");
-                request.getRequestDispatcher("/addManufactor").forward(request, response);
+                request.getRequestDispatcher("/editManufactor").forward(request, response);
                 break;
         }
         
